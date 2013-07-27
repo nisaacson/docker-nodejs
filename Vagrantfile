@@ -3,7 +3,7 @@
 install_docker = <<SCRIPT
 # Add the PPA sources to your apt sources list.
 echo "Installing Docker"
-sudo apt-get update
+sudo apt-get update && sudo apt-get install linux-image-generic-lts-raring
 sudo apt-get install -y python-software-properties && sudo add-apt-repository ppa:dotcloud/lxc-docker
 # Update your sources
 sudo apt-get update
@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  config.vm.provision :shell, :inline => install_docker
+#  config.vm.provision :shell, :inline => install_docker
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
