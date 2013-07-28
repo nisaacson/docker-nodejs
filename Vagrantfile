@@ -18,6 +18,10 @@ sudo apt-get update
 sudo apt-get install -y nodejs
 SCRIPT
 
+provision_postgres = <<SCRIPT
+cd /vagrant/docker-postgres && gzip -dc pg_tabrific.tgz | docker import - pg_tabrific
+docker run -d pg_tabrific /opt/start.sh
+SCRIPT
 hosts = %Q[
   financial.dev 192.168.30.30
   postgres.dev  192.168.30.31
@@ -27,11 +31,16 @@ Vagrant.configure("2") do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
+  config.vm.provision :shell, :inline => install_docker
   # Every Vagrant virtual environment requires a box to build off of.
   hosts.each do |host, ip|
     config.vm.define host.to_sym do |box|
       box.vm.hostname = host.to_s
       box.vm.network :private_network, ip: ip
+
+      if (host == 'postgres.dev')
+        box.vm.provision :shell, :inline => provision_postgres
+      end
     end
   end
 
@@ -41,9 +50,9 @@ Vagrant.configure("2") do |config|
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  config.vm.provision :shell, :inline => 'sudo apt-get install -y make'
-  config.vm.provision :shell, :inline => install_node
-#  config.vm.provision :shell, :inline => install_docker
+  # config.vm.provision :shell, :inline => 'sudo apt-get install -y make'
+  # config.vm.provision :shell, :inline => install_node
+  # config.vm.provision :shell, :inline => install_docker
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
