@@ -1,0 +1,3 @@
+[submodule "docker-postgres"]
+	path = docker-postgres
+	url = git@bitbucket.org:tabrific/docker-postgres.git
