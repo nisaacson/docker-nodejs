@@ -19,7 +19,11 @@
   "dependencies": {
     "restify": "~2.6.0",
     "should": "~1.2.2",
-    "moment": "~2.1.0"
+    "moment": "~2.1.0",
+    "uuid": "~1.4.1",
+    "winston": "~0.7.2",
+    "required-keys": "~1.0.5",
+    "pg": "~2.2.0"
   },
   "devDependencies": {
     "mocha": "~1.12.0",

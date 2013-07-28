@@ -17,7 +17,6 @@ before(function(done) {
       should.not.exist(err)
       should.exist(reply)
       reply.port.should.eql(port)
-      inspect(reply.port, 'server listening on port')
       done()
     })
   })
